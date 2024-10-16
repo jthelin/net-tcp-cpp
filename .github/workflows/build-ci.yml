@@ -1,0 +1,55 @@
+---
+name: Build-CI
+
+on: pull_request
+
+permissions:
+  actions: read
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os:
+          - macos-12
+          - ubuntu-20.04
+          - ubuntu-22.04
+          - ubuntu-24.04
+
+    runs-on: ${{ matrix.os }}
+
+    name: Build-${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: List environment
+        shell: bash
+        run: |
+          echo "-- Runtime Environment" && env | sort
+      - name: cmake version
+        shell: bash
+        run: |
+          cmake --version
+          which gcc && echo gcc && gcc --version
+          which gcc-8 && echo gcc-8 && gcc-8 --version
+          which gcc-9 && echo gcc-9 && gcc-9 --version
+          which gcc-10 && echo gcc-10 && gcc-10 --version
+          which clang && echo clang && clang --version
+          which clang-9 && echo clang-9 && clang-9 --version
+          which clang-10 && echo clang-10 && clang-10 --version
+          which c++ && c++ --version
+      - name: List build files
+        shell: bash
+        run: |
+          echo "-- Current User" && id
+          echo "-- Current Directory" && pwd
+          echo "-- Directory Listing - Current Directory" && ls -lhR "${PWD}"
+      - name: cmake build
+        shell: bash
+        run: |
+          ./build.sh
+      - name: Run tests
+        shell: bash
+        run: |
+          ./test.sh --verbose
