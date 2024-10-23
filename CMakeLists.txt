@@ -1,6 +1,8 @@
 CMAKE_MINIMUM_REQUIRED(VERSION 3.14)
 
-PROJECT(net-tcp-cpp LANGUAGES CXX)
+PROJECT(net-tcp-cpp
+        VERSION 1.0
+        LANGUAGES CXX)
 
 SET(CMAKE_CXX_STANDARD 17)
 
@@ -12,8 +14,21 @@ MESSAGE(STATUS "Building project ${PROJECT_NAME} with build config = ${CMAKE_BUI
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 
+# --------------------
+# Include libraries
+
+# cxxopts - Command Line Options Parser library
+# https://github.com/jarro2783/cxxopts/
+INCLUDE(cxxopts-lib)
+
+# argparse - Argument parser for modern C++
+# https://github.com/p-ranav/argparse
+INCLUDE(argparse-lib)
+
 # Google Test Framework
 INCLUDE(googletest)
+
+# --------------------
 
 # Enable Address Sanitizer in Debug builds
 IF (NOT (MSVC))
