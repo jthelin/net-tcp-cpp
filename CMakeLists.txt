@@ -15,11 +15,7 @@ MESSAGE(STATUS "Building project ${PROJECT_NAME} with build config = ${CMAKE_BUI
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/cmake")
 
 # --------------------
-# Include libraries
-
-# cxxopts - Command Line Options Parser library
-# https://github.com/jarro2783/cxxopts/
-INCLUDE(cxxopts-lib)
+# External libraries
 
 # argparse - Argument parser for modern C++
 # https://github.com/p-ranav/argparse
@@ -36,8 +32,8 @@ IF (NOT (MSVC))
     string(APPEND CMAKE_LINKER_FLAGS_DEBUG " -fsanitize=address")
 ENDIF ()
 
-# ADD_SUBDIRECTORY(src)
+ADD_SUBDIRECTORY(src)
 
 # Testing
 ENABLE_TESTING()
-# ADD_SUBDIRECTORY(tests)
+ADD_SUBDIRECTORY(test)
